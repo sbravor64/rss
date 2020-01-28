@@ -31,7 +31,15 @@ public class ConexionRSS {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             channels = ((RSS)jaxbUnmarshaller.unmarshal(is)).channelList;
 
-            channels.stream().forEach(System.out::println);
+//            channels.stream().forEach(System.out::println);
+
+            List<Item> items = new ArrayList<>();
+            channels.forEach(channel -> {
+                items.addAll(channel.getItems().stream().filter(item -> item.title.toLowerCase().contains("el")).collect(Collectors.toList()));
+            });
+
+            System.out.println("consulta");
+            items.forEach(System.out::println);
         }
     }
 
